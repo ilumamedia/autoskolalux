@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { max-width:100%; overflow-x:clip; }
+  html { scroll-behavior:smooth; scrollbar-width:none; -ms-overflow-style:none; }
+  html::-webkit-scrollbar, body::-webkit-scrollbar { width:0; height:0; display:none; }
+  body { font-family:'Manrope',sans-serif; color:#E6EDF7; background:#0A1A3F; -webkit-font-smoothing:antialiased; }
+  a { color:#1E7FCB; text-decoration:none; }
+  a:hover { color:#F7C325; }
+  ::selection { background:#F7C325; color:#0A1A3F; }
+  @keyframes lux-marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+  .lux-marquee-track { display:flex; gap:20px; width:max-content; animation:lux-marquee 32s linear infinite; }
+  .lux-marquee-mask:hover .lux-marquee-track { animation-play-state:paused; }
+  .tim-card image-slot { transition:transform .35s ease; display:block; }
+  .tim-card:hover image-slot { transform:scale(1.08); }
+  .lux-burger { display:none; }
+  .lux-mobile-menu { display:none; }
+  @media (max-width:820px){
+    .lux-desktop-nav { display:none !important; }
+    .lux-burger { display:flex !important; }
+    .lux-mobile-menu.open { display:flex !important; }
+    .g-hero, .g-2, .g-onama, .g-3, .g-2b, .g-kat { grid-template-columns:minmax(0,1fr) !important; }
+    .g-4 { grid-template-columns:minmax(0,1fr) !important; }
+    .hero-text, .hero-stats { min-width:0 !important; }
+    .hero-h1 { font-size:40px !important; }
+    .g-hero { padding-left:24px !important; padding-right:24px !important; padding-top:28px !important; padding-bottom:44px !important; }
+    .hero-text p { max-width:100% !important; }
+    .hero-img { width:92% !important; margin-left:auto !important; margin-right:auto !important; }
+    .ig-badge { padding:11px 15px !important; border-radius:13px !important; left:-10px !important; bottom:-16px !important; }
+    .ig-badge > div:first-child { font-size:13px !important; }
+    .ig-badge > div:last-child { font-size:11px !important; }
+    .tim-inner { padding-top:34px !important; }
+    .lux-map-box { min-height:0 !important; height:220px !important; }
+    .lux-map-box iframe { min-height:0 !important; height:220px !important; }
+    .hero-stats { gap:20px !important; margin-top:34px !important; justify-content:space-between !important; width:100% !important; padding:0 6px !important; }
+    .hero-stats > div:last-child { text-align:left !important; }
+    .hero-stats > div:nth-child(2) { text-align:center !important; }
+    .hero-stats > div > div:first-child { font-size:30px !important; }
+    .hero-stats > div > div:last-child { font-size:12px !important; }
+    .lux-img-fix { width:100% !important; height:auto !important; max-width:100% !important; }
+    .lux-w-auto { width:100% !important; height:auto !important; }
+    .lux-mt0 { margin-top:0 !important; }
+  }
+  @keyframes lux-pop { 0%{ transform:scale(1); color:#F7C325; } 8%{ transform:scale(1.1); color:#FFE07A; } 16%,100%{ transform:scale(1); color:#F7C325; } }
+  .lux-word { display:inline-block; }
+  .lux-word.w1 { animation:lux-pop 6s ease-in-out infinite; }
+  .lux-word.w2 { animation:lux-pop 6s ease-in-out 2s infinite; }
+  .lux-word.w3 { animation:lux-pop 6s ease-in-out 4s infinite; }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden;">
+
+  <!-- ============ NAV ============ -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(10,26,63,0.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(247,195,37,0.25);">
+    <nav style="max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#pocetna" style="display:flex;align-items:baseline;gap:8px;color:#fff;">
+        <span style="font-family:'Archivo';font-weight:900;font-size:26px;letter-spacing:2px;color:#F7C325;"><i>LUX</i></span>
+        <span style="font-family:'Archivo';font-weight:600;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8CB8E6;">Auto škola</span>
+      </a>
+      <div class="lux-desktop-nav" style="display:flex;align-items:center;gap:28px;">
+        <a href="#onama" style="color:#DCE6F5;font-size:15px;font-weight:600;">O nama</a>
+        <a href="#cenovnik" style="color:#DCE6F5;font-size:15px;font-weight:600;">Cenovnik</a>
+        <a href="#tim" style="color:#DCE6F5;font-size:15px;font-weight:600;">Naš tim</a>
+        <a href="vozila.html" style="color:#DCE6F5;font-size:15px;font-weight:600;">Naša vozila</a>
+        <a href="#lokacija" style="color:#DCE6F5;font-size:15px;font-weight:600;">Kontakt</a>
+        <a href="tel:+3816455773326" style="background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:15px;padding:10px 20px;border-radius:999px;white-space:nowrap;transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-2px);box-shadow:0 10px 24px rgba(247,195,37,0.4);">064 5773326</a>
+      </div>
+      <button class="lux-burger" onClick="{{ toggleMenu }}" aria-label="Meni" style="align-items:center;justify-content:center;width:46px;height:46px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);border-radius:12px;color:#F7C325;font-size:20px;line-height:1;cursor:pointer;">{{ burgerIcon }}</button>
+    </nav>
+    <div class="{{ menuClass }}" style="flex-direction:column;background:rgba(10,26,63,0.99);border-top:1px solid rgba(247,195,37,0.18);padding:8px 24px 18px;">
+      <a href="#onama" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">O nama</a>
+      <a href="#cenovnik" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Cenovnik</a>
+      <a href="#tim" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naš tim</a>
+      <a href="vozila.html" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naša vozila</a>
+      <a href="#lokacija" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;">Kontakt</a>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="pocetna" style="position:relative;background:#0A1A3F;color:#fff;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(1000px 600px at 85% -10%, rgba(30,127,203,0.35), transparent 60%);"></div>
+    <div class="g-hero" style="position:relative;max-width:1200px;margin:0 auto;padding:80px 32px 90px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;">
+      <div class="hero-text">
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);color:#F7C325;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:26px;"><span class="lux-word w1">Brzo</span> · <span class="lux-word w2">Jednostavno</span> · <span class="lux-word w3">Pouzdano</span></div>
+        <h1 class="hero-h1" style="font-family:'Archivo';font-weight:900;font-size:60px;line-height:1.03;letter-spacing:-1px;margin-bottom:22px;">Sa nama ste<br>na <span style="color:#F7C325;">pravom putu</span></h1>
+        <p style="font-size:19px;line-height:1.6;color:#C2D2EA;max-width:520px;margin-bottom:34px;">Auto škola LUX vas vodi od prvog časa teorije do dozvole u ruci — uz iskusne instruktore, moderna vozila i obuku prilagođenu vama.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;max-width:340px;">
+          <a href="#obuka" style="background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:16px;padding:15px 30px;border-radius:999px;">Obuka</a>
+          <a href="#cenovnik" style="border:1.5px solid rgba(255,255,255,0.35);color:#fff;font-family:'Archivo';font-weight:700;font-size:16px;padding:15px 30px;border-radius:999px;">Cenovnik</a>
+        </div>
+        <div class="hero-stats" style="display:flex;justify-content:space-between;max-width:400px;gap:36px;margin-top:46px;">
+          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">35+</div><div style="font-size:14px;color:#9FB6D6;">godina iskustva</div></div>
+          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">5000+</div><div style="font-size:14px;color:#9FB6D6;">položenih vozača</div></div>
+          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">98%</div><div style="font-size:14px;color:#9FB6D6;">prolaznost</div></div>
+        </div>
+      </div>
+      <div class="lux-mt0 hero-img" style="position:relative;margin-top:63px;">
+        <div class="lux-img-fix" style="position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.12); aspect-ratio: 7/6; width: 514px; height: 405px">
+          <image-slot id="hero-foto-t" src="images/hero-foto-t.webp" shape="rect" placeholder="Fotografija auto škole / vozila" style="width:100%;height:100%;"></image-slot>
+        </div>
+        <a href="https://www.instagram.com/autoskolalux/" target="_blank" rel="noopener" class="ig-badge" style="position:absolute;bottom:-22px;left:-22px;background:#1E7FCB;color:#fff;border-radius:16px;padding:18px 22px;box-shadow:0 16px 40px rgba(30,127,203,0.4);transition:transform .3s ease,box-shadow .3s ease;text-decoration:none;display:block;" style-hover="transform:translateY(-8px);box-shadow:0 24px 52px rgba(30,127,203,0.55);">
+          <div style="font-family:'Archivo';font-weight:800;font-size:15px;">@autoskolalux</div>
+          <div style="font-size:13px;color:#CFE4FA;">Prati nas na Instagramu</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KATEGORIJE ============ -->
+  <section id="kategorije" style="max-width:1200px;margin:0 auto;padding:8px 32px 32px;">
+    <div style="text-align:center;margin-bottom:0;">
+      
+      
+    </div>
+    <div class="g-kat" style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;margin:0 auto;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 42px;background:#122549;transition:transform .2s,box-shadow .2s,border-color .2s;" style-hover="transform:translateY(-4px);border-color:#F7C325;box-shadow:0 24px 54px rgba(10,26,63,0.35),0 0 30px rgba(247,195,37,0.18);">
+      <div style="width:76px;height:76px;border-radius:18px;background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:900;font-size:38px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">B</div>
+      <div>
+        <h3 style="font-family:'Archivo';font-weight:900;font-size:24px;line-height:1.15;letter-spacing:-0.5px;margin-bottom:10px;">Od <span style="color:#F7C325;">1991. godine</span> uspešno vršimo obuku za B kategoriju</h3>
+        <p style="font-size:15px;line-height:1.6;color:#AEC0DC;">Moderni putnički automobili do 3.5t. Teorija i praktična vožnja sa iskusnim instruktorom.</p>
+      </div>
+    </div>
+    <div class="g-kat" style="display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;margin:20px auto 0;border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:32px 42px;background:#122549;transition:transform .2s,box-shadow .2s,border-color .2s;" style-hover="transform:translateY(-4px);border-color:#F7C325;box-shadow:0 24px 54px rgba(10,26,63,0.35),0 0 30px rgba(247,195,37,0.18);">
+      <div style="width:76px;height:76px;border-radius:18px;background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:900;font-size:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">PSP</div>
+      <div>
+        <h3 style="font-family:'Archivo';font-weight:900;font-size:24px;line-height:1.15;letter-spacing:-0.5px;margin-bottom:10px;">Polaganje za <span style="color:#F7C325;">poznavanje saobraćajnih propisa</span></h3>
+        <p style="font-size:15px;line-height:1.6;color:#AEC0DC;">Dozvola za upravljanje mopedom i lakšim vozilima.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OBUKA / KORACI ============ -->
+  <section id="obuka" style="background:#0C1E45;">
+    <div style="max-width:1200px;margin:0 auto;padding:64px 32px;">
+      <div class="g-2" style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:stretch;">
+        <div style="display:flex;flex-direction:column;">
+          <div style="color:#1E7FCB;font-weight:800;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;">Kako izgleda obuka</div>
+          <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;line-height:1.1;letter-spacing:-0.5px;margin-bottom:26px;">Do dozvole u<br>četiri koraka</h2>
+          <p style="font-size:17px;line-height:1.65;color:#AEC0DC;margin-bottom:34px;">Jasan put od upisa do vozačke dozvole. Sve vreme uz podršku instruktora i fleksibilne termine.</p>
+          <a href="vozila.html" style="display:inline-block;background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:16px;padding:15px 30px;border-radius:999px;align-self:flex-start;transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-6px);box-shadow:0 16px 34px rgba(247,195,37,0.3);">Pogledaj naša vozila</a>
+        </div>
+        <div style="display:grid;gap:16px;">
+          <sc-for list="{{ koraci }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex;gap:20px;align-items:flex-start;background:#132A54;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 24px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;" style-hover="transform:translateY(-6px);border-color:#F7C325;box-shadow:0 16px 34px rgba(247,195,37,0.18);">
+              <div style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;">{{ s.broj }}</div>
+              <div>
+                <h4 style="font-family:'Archivo';font-weight:800;font-size:18px;margin-bottom:4px;">{{ s.naslov }}</h4>
+                <p style="font-size:15px;line-height:1.55;color:#AEC0DC;">{{ s.opis }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TRAKA: PRAKTICNI CASOVI ============ -->
+  <section style="background:#0C1E45;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);">
+    <div class="g-2" style="max-width:1200px;margin:0 auto;padding:34px 32px;display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:center;">
+      <div style="font-family:'Archivo';font-weight:900;font-size:24px;line-height:1.3;color:#fff;">Imaš dozvolu, nemaš iskustva i samopouzdanja?</div>
+      <div style="display:flex;gap:20px;align-items:flex-start;background:#132A54;border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:22px 24px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;" style-hover="transform:translateY(-6px);border-color:#F7C325;box-shadow:0 16px 34px rgba(247,195,37,0.18);">
+        <div style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:#F7C325;color:#0A1A3F;font-size:22px;display:flex;align-items:center;justify-content:center;">🙂</div>
+        <div style="font-size:16px;line-height:1.55;color:#AEC0DC;">Nema problema — uvek možeš da zakažeš praktične časove, da osvežimo znanje.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ O NAMA ============ -->
+  <section id="onama" style="max-width:1200px;margin:0 auto;padding:90px 32px;">
+    <div class="g-onama" style="display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;margin-bottom:64px;">
+      <div class="lux-img-fix" style="position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/3; border: 1px solid rgba(255,255,255,0.12); box-shadow: 0 24px 54px rgba(10,26,63,0.12); width: 512px; height: 369px; transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;" style-hover="transform:translateY(-8px) scale(1.03);border-color:#F7C325;box-shadow:0 24px 54px rgba(10,26,63,0.12),0 0 34px rgba(247,195,37,0.35);">
+        <image-slot id="onama-foto-t" src="images/onama-foto-t.webp" shape="rect" placeholder="Fotografija škole / tabla LUX" style="width:100%;height:100%;"></image-slot>
+      </div>
+      <div>
+        <div style="color:#1E7FCB;font-weight:800;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">O nama</div>
+        <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;line-height:1.08;letter-spacing:-0.5px;margin-bottom:18px;">Sigurnost, edukacija i pouzdanost</h2>
+        <p class="lux-w-auto" style="font-size: 17px; line-height: 1.65; color: #AEC0DC; margin-bottom: 16px; width: 546px; height: 83px">Auto škola LUX već više od 35 godina pomaže budućim vozačima da bezbedno i samouvereno izađu na put. Naš cilj nije samo da položite ispit — već da postanete vozač koji zna, misli i vozi odgovorno.</p>
+        <p class="lux-w-auto" style="font-size: 17px; line-height: 1.65; color: #AEC0DC; width: 538px; height: 63px">Sa iskusnim instruktorima, modernim vozilima i individualnim pristupom, gradimo poverenje sa Vama.</p>
+      </div>
+    </div>
+    <div class="g-3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <sc-for list="{{ prednosti }}" as="p" hint-placeholder-count="6">
+        <div style="border:1px solid transparent;border-left:4px solid #F7C325;background:#132A54;border-radius:0 14px 14px 0;padding:26px 28px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,border-radius .25s ease;" style-hover="transform:translateY(-6px);border:1px solid #F7C325;border-radius:14px;box-shadow:0 16px 34px rgba(247,195,37,0.18);">
+          <h3 style="font-family:'Archivo';font-weight:800;font-size:19px;margin-bottom:8px;">{{ p.naslov }}</h3>
+          <p style="font-size:15px;line-height:1.6;color:#AEC0DC;">{{ p.opis }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ CENOVNIK ============ -->
+  <section id="cenovnik" style="background:#0C1E45;">
+    <div style="max-width:1200px;margin:0 auto;padding:60px 32px;">
+      <div style="text-align:center;margin-bottom:40px;">
+        
+        <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-0.5px;">Cenovnik</h2>
+      </div>
+      <div class="g-3" style="display:grid;grid-template-columns:repeat(2,minmax(0,400px));justify-content:center;gap:24px;">
+        <sc-for list="{{ cenovnik }}" as="c" hint-placeholder-count="2">
+          <div style="border-radius:18px;padding:34px 30px;background:{{ c.bg }};color:{{ c.fg }};border:1px solid rgba(255,255,255,0.12);position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;" style-hover="transform:translateY(-6px);border-color:#F7C325;box-shadow:0 16px 34px rgba(247,195,37,0.22);">
+            <sc-if value="{{ c.istaknuto }}" hint-placeholder-val="{{ true }}">
+              
+            </sc-if>
+            <div style="font-family:'Archivo';font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:{{ c.labela }};margin-bottom:14px;">{{ c.naziv }}</div>
+            <div style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-1px;margin-bottom:4px;">{{ c.cena }}</div>
+            <div style="font-size:14px;color:{{ c.labela }};margin-bottom:22px;">{{ c.jedinica }}</div>
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <sc-for list="{{ c.stavke }}" as="st" hint-placeholder-count="4">
+                <div style="display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;">
+                  <span style="color:#F7C325;font-weight:900;">✓</span><span>{{ st }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="text-align:center;font-size:14px;color:#AEC0DC;margin-top:28px;">Moguće plaćanje na rate. Za tačnu ponudu pozovite <a href="tel:0113119375" style="font-weight:700;">011 311 93 75</a>.</p>
+    </div>
+  </section>
+
+  <!-- ============ VOZILA ============ -->
+  <!-- ============ NAS TIM ============ -->
+  <section id="tim" style="background:#0C1E45;">
+    <div class="tim-inner" style="max-width:1200px;margin:0 auto;padding:60px 32px;">
+      <div style="text-align:center;margin-bottom:40px;">
+        
+        <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-0.5px;">Naš tim</h2>
+      </div>
+      <div class="g-4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+        <sc-for list="{{ tim }}" as="t" hint-placeholder-count="4">
+          <div class="tim-card" style="background:#132A54;border:1px solid rgba(255,255,255,0.12);border-radius:18px;overflow:hidden;text-align:center;">
+            <div style="aspect-ratio:1/1;position:relative;overflow:hidden;">
+              <image-slot id="{{ t.id }}" src="{{ t.img }}" shape="rect" placeholder="Portret"></image-slot>
+            </div>
+            <div style="padding:20px 18px;">
+              <h3 style="font-family:'Archivo';font-weight:800;font-size:18px;margin-bottom:3px;">{{ t.ime }}</h3>
+              <p style="font-size:14px;color:#1E7FCB;font-weight:600;">{{ t.uloga }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOKACIJA ============ -->
+  <section id="lokacija" style="max-width:1200px;margin:0 auto;padding:90px 32px;">
+    <div style="text-align:center;margin-bottom:52px;">
+      
+      <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-0.5px;">Gde se nalazimo</h2>
+    </div>
+    <div class="g-2b" style="display:grid;grid-template-columns:1.55fr 1fr;gap:28px;align-items:stretch;">
+      <div class="lux-map-box" style="position:relative;border-radius:18px;overflow:hidden;min-height:440px;border:1px solid rgba(255,255,255,0.12);">
+        <iframe src="https://maps.google.com/maps?q=Bulevar%20Zorana%20%C4%90in%C4%91i%C4%87a%2044%2C%2011070%20Novi%20Beograd&amp;z=16&amp;output=embed" style="width:100%;height:100%;min-height:440px;border:0;display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Lokacija Auto škola LUX"></iframe>
+      </div>
+      <div style="background:#132A54;border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:38px 34px;display:flex;flex-direction:column;justify-content:center;gap:26px;">
+        <div>
+          <div style="font-family:'Archivo';font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#F7C325;margin-bottom:8px;">Adresa</div>
+          <div style="font-family:'Archivo';font-weight:800;font-size:22px;line-height:1.3;">Bulevar Zorana Đinđića 44<br>11070 Novi Beograd</div>
+        </div>
+        <div>
+          <div style="font-family:'Archivo';font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#F7C325;margin-bottom:8px;">KONTAKT</div>
+          <a href="tel:0113119375" style="font-family:'Archivo';font-weight:800;font-size:20px;color:#fff;display:block;">011 311 93 75</a>
+          <a href="tel:+3816455773326" style="font-family:'Archivo';font-weight:800;font-size:20px;color:#fff;display:block;margin-top:6px;">064 5773326</a>
+        </div>
+        <div>
+          <div style="font-family:'Archivo';font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#F7C325;margin-bottom:8px;">Radno vreme</div>
+          <div style="font-size:16px;line-height:1.6;color:#AEC0DC;">Pon–Pet: 09–19h<br>Subota: 09–14h</div>
+        </div>
+        <a href="https://maps.google.com" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:15px;padding:14px 22px;border-radius:999px;">Otvori u Google Maps</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#06122B;color:#8AA0C0;">
+    <div style="max-width:1200px;margin:0 auto;padding:48px 32px;display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span style="font-family:'Archivo';font-weight:900;font-size:20px;letter-spacing:2px;color:#F7C325;"><i>LUX</i></span>
+        <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Auto škola</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:22px;font-size:14px;font-weight:600;">
+        <a href="#onama" style="color:#DCE6F5;">O nama</a>
+        <a href="#cenovnik" style="color:#DCE6F5;">Cenovnik</a>
+        <a href="vozila.html" style="color:#DCE6F5;">Naša vozila</a>
+        <a href="#lokacija" style="color:#DCE6F5;">Kontakt</a>
+      </div>
+      <div style="font-size:14px;">Sa nama ste na pravom putu · 011 311 93 75</div>
+      <div style="font-size:13px;color:#5E7395;">© 2026 Auto škola LUX</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { menuOpen: false };
+  componentDidMount() {
+    const targetEl = () => {
+      const id = decodeURIComponent((location.hash || "").replace("#", ""));
+      return id ? document.getElementById(id) : null;
+    };
+    const scrollOnce = () => {
+      const el = targetEl();
+      if (!el) return null;
+      const y = Math.round(el.getBoundingClientRect().top + window.pageYOffset - 80);
+      window.scrollTo(0, y);
+      return y;
+    };
+    if (location.hash) {
+      // Keep re-targeting until the computed position stops changing
+      // (images/fonts finished loading and layout settled) — reliable on mobile.
+      let last = null, stable = 0, n = 0;
+      const iv = setInterval(() => {
+        const y = scrollOnce();
+        if (y !== null && y === last) { if (++stable >= 3) clearInterval(iv); }
+        else stable = 0;
+        last = y;
+        if (++n > 45) clearInterval(iv);
+      }, 80);
+      window.addEventListener("load", scrollOnce);
+    }
+    window.addEventListener("hashchange", () => setTimeout(scrollOnce, 0));
+  }
+  renderVals() {
+    const menuOpen = this.state.menuOpen;
+    return {
+      menuClass: menuOpen ? "lux-mobile-menu open" : "lux-mobile-menu",
+      burgerIcon: menuOpen ? "\u2715" : "\u2630",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      navClick: (e) => {
+        const href = e.currentTarget.getAttribute("href") || "";
+        const id = decodeURIComponent(href.replace("#", ""));
+        e.preventDefault();
+        this.setState({ menuOpen: false });
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 60);
+      },
+      kategorije: [
+        { oznaka: "B", naslov: "Kategorija B", opis: "Putnički automobili do 3.5t. Najtraženija obuka — teorija i praktična vožnja sa iskusnim instruktorom." },
+      ],
+      koraci: [
+        { broj: "1", naslov: "Upis i lekarski pregled", opis: "Prijaviš se, obaviš pregled i krećeš — bez komplikacija." },
+        { broj: "2", naslov: "Teorijska obuka", opis: "Časovi teorije i priprema za polaganje testa iz saobraćaja." },
+        { broj: "3", naslov: "Praktična vožnja", opis: "Časovi vožnje sa instruktorom, prilagođeni tvom tempu." },
+        { broj: "4", naslov: "Polaganje i dozvola", opis: "Izlaziš na ispit spreman i sigurno stižeš do dozvole." },
+      ],
+      prednosti: [
+        { naslov: "Iskusni instruktori", opis: "Strpljivi profesionalci koji te uče da voziš sigurno, ne samo da položiš." },
+        { naslov: "Fleksibilni termini", opis: "Časove zakazuješ kad tebi odgovara — pre ili posle posla i fakulteta." },
+        { naslov: "Moderna vozila", opis: "Redovno servisirana i bezbedna vozila za praktičnu obuku." },
+        { naslov: "Visoka prolaznost", opis: "Naši polaznici prolaze iz prvog puta u velikom procentu." },
+        { naslov: "Povoljne cene", opis: "Jasan cenovnik i mogućnost plaćanja na rate." },
+        { naslov: "Podrška do kraja", opis: "Uz tebe smo od prvog časa do dana kada dobiješ dozvolu." },
+      ],
+      cenovnik: [
+        { naziv: "Kategorija B", cena: "od 85.000 rsd", jedinica: "Putnički automobil", bg: "#1E7FCB", fg: "#fff", labela: "#CFE4FA", istaknuto: true, stavke: ["Kompletna teorijska obuka", "40 časova vožnje", "Časovi po dogovoru", "Plaćanje na rate", "Podrška do ispita"] },
+        { naziv: "PSP", cena: "od 15.000 rsd", jedinica: "Moped i lakša vozila", bg: "#132A54", fg: "#E6EDF7", labela: "#AEC0DC", istaknuto: false, stavke: ["Poznavanje saobraćajnih propisa", "Priprema za test", "Fleksibilni termini", "Podrška do ispita"] },
+      ],
+      vozila: [
+        { id: "t-vozilo-1", placeholder: "Automobil za obuku (kat. B)", naslov: "Automobil — kategorija B", opis: "Komforan i bezbedan, idealan za prve časove." },
+        { id: "t-vozilo-2", placeholder: "Motocikl (kat. A)", naslov: "Motocikl — kategorija A", opis: "Obuka na poligonu i u realnom saobraćaju." },
+        { id: "t-vozilo-3", placeholder: "Teretno vozilo (kat. C)", naslov: "Kamion — kategorija C", opis: "Profesionalna obuka za teretna vozila." },
+      ],
+      vozilaB: [
+        { id: "t-vozilo-b1", placeholder: "Vozilo B 1" },
+        { id: "t-vozilo-b2", placeholder: "Vozilo B 2" },
+        { id: "t-vozilo-b3", placeholder: "Vozilo B 3" },
+        { id: "t-vozilo-b4", placeholder: "Vozilo B 4" },
+        { id: "t-vozilo-b5", placeholder: "Vozilo B 5" },
+        { id: "t-vozilo-b1", placeholder: "Vozilo B 1" },
+        { id: "t-vozilo-b2", placeholder: "Vozilo B 2" },
+        { id: "t-vozilo-b3", placeholder: "Vozilo B 3" },
+        { id: "t-vozilo-b4", placeholder: "Vozilo B 4" },
+        { id: "t-vozilo-b5", placeholder: "Vozilo B 5" },
+      ],
+      tim: [
+        { id: "t-tim-1", ime: "Instruktor 1", uloga: "Kategorija B", img: "images/t-tim-1.webp" },
+        { id: "t-tim-2", ime: "Instruktor 2", uloga: "Kategorija B", img: "images/t-tim-2.webp" },
+        { id: "t-tim-3", ime: "Instruktor 3", uloga: "Kategorija B", img: "images/t-tim-3.webp" },
+        { id: "t-tim-4", ime: "Instruktor 4", uloga: "Teorijska obuka", img: "images/t-tim-4.webp" },
+      ],
+      galerija: [
+        { id: "t-gal-1", span: 2 }, { id: "t-gal-2", span: 1 }, { id: "t-gal-3", span: 1 },
+        { id: "t-gal-4", span: 1 }, { id: "t-gal-5", span: 1 }, { id: "t-gal-6", span: 2 },
+      ],
+      posalji: (e) => { e.preventDefault(); alert("Hvala! Javićemo vam se uskoro na broj telefona koji ste ostavili."); },
+    };
+  }
+}
+</script>
+</body>
+</html>
