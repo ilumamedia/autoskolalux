@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Manrope',sans-serif; color:#E6EDF7; background:#0A1A3F; -webkit-font-smoothing:antialiased; }
+  a { color:#1E7FCB; text-decoration:none; }
+  a:hover { color:#F7C325; }
+  ::selection { background:#F7C325; color:#0A1A3F; }
+  .voz-card image-slot { transition:transform .35s ease; display:block; }
+  .voz-card:hover image-slot { transform:scale(1.08); }
+  .voz-burger { display:none; }
+  .voz-menu { display:none; }
+  @media (max-width:820px){
+    .voz-grid { grid-template-columns:1fr !important; gap:20px !important; }
+    .voz-back { display:none !important; }
+    .voz-burger { display:flex !important; }
+    .voz-menu.open { display:flex !important; }
+  }
+  @media (max-width:560px){
+    .voz-nav { padding-left:18px !important; padding-right:18px !important; gap:12px !important; }
+    .voz-hero { padding-left:20px !important; padding-right:20px !important; }
+    .voz-hero h1 { font-size:34px !important; }
+  }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="width:100%;overflow-x:hidden;min-height:100vh;">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(10,26,63,0.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(247,195,37,0.25);">
+    <nav class="voz-nav" style="max-width:1200px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="index.html" style="display:flex;align-items:baseline;gap:8px;color:#fff;">
+        <span style="font-family:'Archivo';font-weight:900;font-size:26px;letter-spacing:2px;color:#F7C325;"><i>LUX</i></span>
+        <span class="voz-logo-sub" style="font-family:'Archivo';font-weight:600;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#8CB8E6;">Auto škola</span>
+      </a>
+      <a href="index.html" class="voz-back" style="color:#DCE6F5;font-size:15px;font-weight:600;white-space:nowrap;">← Nazad na početnu</a>
+      <button class="voz-burger" onClick="{{ toggleMenu }}" aria-label="Meni" style="align-items:center;justify-content:center;width:46px;height:46px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);border-radius:12px;color:#F7C325;font-size:20px;line-height:1;cursor:pointer;">{{ burgerIcon }}</button>
+    </nav>
+    <div class="{{ menuClass }}" style="flex-direction:column;background:rgba(10,26,63,0.99);border-top:1px solid rgba(247,195,37,0.18);padding:8px 24px 18px;">
+      <a href="index.html#onama" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">O nama</a>
+      <a href="index.html#cenovnik" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Cenovnik</a>
+      <a href="index.html#tim" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naš tim</a>
+      <a href="vozila.html" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naša vozila</a>
+      <a href="index.html#lokacija" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;">Kontakt</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="voz-hero" style="max-width:1100px;margin:0 auto;padding:70px 32px 20px;text-align:center;">
+    
+    <h1 style="font-family:'Archivo';font-weight:900;font-size:48px;letter-spacing:-1px;margin-bottom:18px;">Naša vozila</h1>
+    <p style="font-size:18px;line-height:1.6;color:#AEC0DC;max-width:620px;margin:0 auto;">Moderna, redovno servisirana i bezbedna vozila za praktičnu obuku svih kategorija.</p>
+  </section>
+
+  <!-- VOZILA GRID -->
+  <section style="max-width:1200px;margin:0 auto;padding:50px 32px 90px;">
+    <div class="voz-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <sc-for list="{{ vozila }}" as="v" hint-placeholder-count="6">
+        <div class="voz-card" style="border:1px solid rgba(255,255,255,0.12);border-radius:18px;overflow:hidden;background:#132A54;">
+          <div style="aspect-ratio:4/3;position:relative;overflow:hidden;">
+            <image-slot id="{{ v.id }}" src="{{ v.img }}" shape="rect" placeholder="{{ v.placeholder }}"></image-slot>
+            <button data-slot="{{ v.id }}" onClick="{{ open }}" title="Uvećaj sliku" style="position:absolute;left:8px;top:8px;z-index:3;width:34px;height:34px;border:0;border-radius:8px;background:rgba(10,26,63,0.7);color:#F7C325;font-size:16px;cursor:pointer;backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;">⤢</button>
+          </div>
+          <div style="padding:22px 24px;">
+            <h3 style="font-family:'Archivo';font-weight:800;font-size:19px;margin-bottom:4px;">{{ v.naslov }}</h3>
+            <p style="font-size:15px;line-height:1.5;color:#AEC0DC;">{{ v.opis }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  {{ overlay }}
+
+  <footer style="background:#06122B;color:#8AA0C0;">
+    <div style="max-width:1200px;margin:0 auto;padding:48px 32px;display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:baseline;gap:8px;">
+        <span style="font-family:'Archivo';font-weight:900;font-size:20px;letter-spacing:2px;color:#F7C325;"><i>LUX</i></span>
+        <span style="font-size:12px;letter-spacing:3px;text-transform:uppercase;">Auto škola</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:22px;font-size:14px;font-weight:600;">
+        <a href="index.html#kategorije" style="color:#DCE6F5;">Kategorije</a>
+        <a href="index.html#onama" style="color:#DCE6F5;">O nama</a>
+        <a href="index.html#cenovnik" style="color:#DCE6F5;">Cenovnik</a>
+        <a href="vozila.html" style="color:#DCE6F5;">Naša vozila</a>
+        <a href="index.html#lokacija" style="color:#DCE6F5;">Lokacija</a>
+      </div>
+      <div style="font-size:14px;">Sa nama ste na pravom putu · 011 311 93 75</div>
+      <div style="font-size:13px;color:#5E7395;">© 2026 Auto škola LUX</div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { lightbox: null, menuOpen: false };
+  renderVals() {
+    const menuOpen = this.state.menuOpen;
+    const lista = [
+      { id: "voz-b1", img: "images/voz-b1.webp", placeholder: "Automobil B 1", naslov: "Automobil — kategorija B", opis: "Komforan i bezbedan, idealan za prve časove vožnje." },
+      { id: "voz-b2", img: "images/voz-b2.webp", placeholder: "Automobil B 2", naslov: "Automobil — kategorija B", opis: "Moderno vozilo sa dvostrukim komandama za sigurnu obuku." },
+      { id: "voz-b3", img: "images/voz-b3.webp", placeholder: "Automobil B 3", naslov: "Automobil — kategorija B", opis: "Ekonomičan i lak za upravljanje, savršen za početnike." },
+      { id: "voz-b4", img: "images/voz-b4.webp", placeholder: "Automobil B 4", naslov: "Automobil — kategorija B", opis: "Redovno servisiran, uvek spreman za čas vožnje." },
+    ];
+    const h = React.createElement;
+    const overlay = this.state.lightbox ? h('div', {
+      onClick: () => this.setState({ lightbox: null }),
+      style: { position:'fixed', inset:0, zIndex:1000, background:'rgba(6,12,30,0.92)', display:'flex', alignItems:'center', justifyContent:'center', padding:'40px', cursor:'zoom-out', backdropFilter:'blur(4px)' },
+    },
+      h('img', { src: this.state.lightbox, alt:'Vozilo', style:{ maxWidth:'92vw', maxHeight:'88vh', borderRadius:'16px', boxShadow:'0 30px 80px rgba(0,0,0,0.6)' } }),
+      h('button', { onClick:()=>this.setState({ lightbox:null }), style:{ position:'fixed', top:'24px', right:'28px', width:'46px', height:'46px', border:0, borderRadius:'50%', background:'#F7C325', color:'#0A1A3F', fontSize:'22px', fontWeight:800, cursor:'pointer' } }, '✕'),
+    ) : null;
+    return {
+      menuClass: menuOpen ? "voz-menu open" : "voz-menu",
+      burgerIcon: menuOpen ? "\u2715" : "\u2630",
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      vozila: lista,
+      overlay: overlay,
+      open: (e) => {
+        const id = e.currentTarget.dataset.slot;
+        const slot = document.getElementById(id);
+        const img = slot && slot.shadowRoot && slot.shadowRoot.querySelector('.frame img');
+        const src = img && img.getAttribute('src');
+        if (src) this.setState({ lightbox: src });
+      },
+      close: () => this.setState({ lightbox: null }),
+    };
+  }
+}
+</script>
+</body>
+</html>
