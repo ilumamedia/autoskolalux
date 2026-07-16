@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { max-width:100%; overflow-x:hidden; }
+  html, body { max-width:100%; overflow-x:clip; }
   html { scroll-behavior:smooth; scrollbar-width:none; -ms-overflow-style:none; }
   html::-webkit-scrollbar, body::-webkit-scrollbar { width:0; height:0; display:none; }
   body { font-family:'Manrope',sans-serif; color:#E6EDF7; background:#0A1A3F; -webkit-font-smoothing:antialiased; }
@@ -82,11 +82,11 @@
       <button class="lux-burger" onClick="{{ toggleMenu }}" aria-label="Meni" style="align-items:center;justify-content:center;width:46px;height:46px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);border-radius:12px;color:#F7C325;font-size:20px;line-height:1;cursor:pointer;">{{ burgerIcon }}</button>
     </nav>
     <div class="{{ menuClass }}" style="flex-direction:column;background:rgba(10,26,63,0.99);border-top:1px solid rgba(247,195,37,0.18);padding:8px 24px 18px;">
-      <a href="#onama" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">O nama</a>
-      <a href="#cenovnik" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Cenovnik</a>
-      <a href="#tim" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naš tim</a>
+      <a href="#onama" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">O nama</a>
+      <a href="#cenovnik" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Cenovnik</a>
+      <a href="#tim" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naš tim</a>
       <a href="vozila.html" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Naša vozila</a>
-      <a href="#lokacija" onClick="{{ closeMenu }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;">Kontakt</a>
+      <a href="#lokacija" onClick="{{ navClick }}" style="color:#DCE6F5;font-size:16px;font-weight:700;padding:14px 0;">Kontakt</a>
     </div>
   </header>
 
@@ -308,23 +308,34 @@
 class Component extends DCLogic {
   state = { menuOpen: false };
   componentDidMount() {
-    const scrollToHash = () => {
+    try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+    const targetEl = () => {
       const id = decodeURIComponent((location.hash || "").replace("#", ""));
-      if (!id) return;
-      let tries = 0;
-      const tick = () => {
-        const el = document.getElementById(id);
-        if (el) {
-          const y = el.getBoundingClientRect().top + window.pageYOffset - 70;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        } else if (tries++ < 40) {
-          setTimeout(tick, 80);
-        }
-      };
-      tick();
+      return id ? document.getElementById(id) : null;
     };
-    scrollToHash();
-    window.addEventListener("hashchange", scrollToHash);
+    const scrollOnce = () => {
+      const el = targetEl();
+      if (!el) return null;
+      const y = Math.round(el.getBoundingClientRect().top + window.pageYOffset - 80);
+      window.scrollTo(0, y);
+      return y;
+    };
+    if (location.hash) {
+      let last = null, stable = 0, n = 0;
+      const iv = setInterval(() => {
+        const y = scrollOnce();
+        if (y !== null && y === last) { if (++stable >= 3) clearInterval(iv); }
+        else stable = 0;
+        last = y;
+        if (++n > 70) clearInterval(iv);
+      }, 80);
+      window.addEventListener("load", scrollOnce);
+      // Re-align every time an image finishes (they shift layout as they load).
+      const imgs = () => document.querySelectorAll("img, image-slot");
+      setTimeout(() => imgs().forEach(im => im.addEventListener && im.addEventListener("load", scrollOnce, true)), 300);
+      document.addEventListener("load", scrollOnce, true);
+    }
+    window.addEventListener("hashchange", () => setTimeout(scrollOnce, 0));
   }
   renderVals() {
     const menuOpen = this.state.menuOpen;
@@ -333,6 +344,19 @@ class Component extends DCLogic {
       burgerIcon: menuOpen ? "\u2715" : "\u2630",
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
       closeMenu: () => this.setState({ menuOpen: false }),
+      navClick: (e) => {
+        const href = e.currentTarget.getAttribute("href") || "";
+        const id = decodeURIComponent(href.replace("#", ""));
+        e.preventDefault();
+        this.setState({ menuOpen: false });
+        setTimeout(() => {
+          const el = document.getElementById(id);
+          if (el) {
+            const y = el.getBoundingClientRect().top + window.pageYOffset - 70;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 60);
+      },
       kategorije: [
         { oznaka: "B", naslov: "Kategorija B", opis: "Putnički automobili do 3.5t. Najtraženija obuka — teorija i praktična vožnja sa iskusnim instruktorom." },
       ],
