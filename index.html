@@ -62,7 +62,7 @@
 <script src="./image-slot.js"></script>
 </helmet>
 
-<div style="width:100%;overflow-x:hidden;">
+<div style="width:100%;overflow-x:clip;">
 
   <!-- ============ NAV ============ -->
   <header style="position:sticky;top:0;z-index:50;background:rgba(10,26,63,0.96);backdrop-filter:blur(8px);border-bottom:1px solid rgba(247,195,37,0.25);">
@@ -93,17 +93,17 @@
   <!-- ============ HERO ============ -->
   <section id="pocetna" style="position:relative;background:#0A1A3F;color:#fff;overflow:hidden;">
     <div style="position:absolute;inset:0;background:radial-gradient(1000px 600px at 85% -10%, rgba(30,127,203,0.35), transparent 60%);"></div>
-    <div class="g-hero" style="position:relative;max-width:1200px;margin:0 auto;padding:80px 32px 90px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;">
+    <div class="g-hero" style="position:relative;max-width:1200px;margin:0 auto;padding:56px 32px 90px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;">
       <div class="hero-text">
         <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);color:#F7C325;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:26px;"><span class="lux-word w1">Brzo</span> · <span class="lux-word w2">Jednostavno</span> · <span class="lux-word w3">Pouzdano</span></div>
         <h1 class="hero-h1" style="font-family:'Archivo';font-weight:900;font-size:60px;line-height:1.03;letter-spacing:-1px;margin-bottom:22px;">Sa nama ste<br>na <span style="color:#F7C325;">pravom putu</span></h1>
         <p style="font-size:19px;line-height:1.6;color:#C2D2EA;max-width:520px;margin-bottom:34px;">Auto škola LUX vas vodi od prvog časa teorije do dozvole u ruci — uz iskusne instruktore, moderna vozila i obuku prilagođenu vama.</p>
         <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;max-width:340px;">
-          <a href="#obuka" style="background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:16px;padding:15px 30px;border-radius:999px;">Obuka</a>
+          <a href="#obuka" style="background:#F7C325;color:#0A1A3F;font-family:'Archivo';font-weight:800;font-size:16px;padding:15px 30px;border-radius:999px;transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-6px);box-shadow:0 16px 34px rgba(247,195,37,0.3);">Obuka</a>
           <a href="#cenovnik" style="border:1.5px solid rgba(255,255,255,0.35);color:#fff;font-family:'Archivo';font-weight:700;font-size:16px;padding:15px 30px;border-radius:999px;">Cenovnik</a>
         </div>
         <div class="hero-stats" style="display:flex;justify-content:space-between;max-width:400px;gap:36px;margin-top:46px;">
-          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">35+</div><div style="font-size:14px;color:#9FB6D6;">godina iskustva</div></div>
+          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;" id="lux-godine">35+</div><div style="font-size:14px;color:#9FB6D6;">godina iskustva</div></div>
           <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">5000+</div><div style="font-size:14px;color:#9FB6D6;">položenih vozača</div></div>
           <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">98%</div><div style="font-size:14px;color:#9FB6D6;">prolaznost</div></div>
         </div>
@@ -307,8 +307,30 @@
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   state = { menuOpen: false };
+  setupCountUp() {
+    const el = document.getElementById("lux-godine");
+    if (!el || el.dataset.counted) return;
+    const target = 35, dur = 1600;
+    const run = () => {
+      if (el.dataset.counted) return;
+      el.dataset.counted = "1";
+      const start = performance.now();
+      const step = (now) => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.max(1, Math.round(eased * target)) + "+";
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { run(); io.disconnect(); } });
+    }, { threshold: 0.4 });
+    io.observe(el);
+  }
   componentDidMount() {
     try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+    this.setupCountUp();
     const targetEl = () => {
       const id = decodeURIComponent((location.hash || "").replace("#", ""));
       return id ? document.getElementById(id) : null;
