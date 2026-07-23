@@ -31,14 +31,19 @@
     .lux-desktop-nav { display:none !important; }
     .lux-burger { display:flex !important; }
     .lux-mobile-menu.open { display:flex !important; }
-    .g-hero, .g-2, .g-onama, .g-3, .g-2b, .g-kat { grid-template-columns:minmax(0,1fr) !important; }
+    .g-hero, .g-2, .g-onama, .g-3, .g-2b, .g-kat, .g-cen { grid-template-columns:minmax(0,1fr) !important; }
     .g-4 { grid-template-columns:minmax(0,1fr) !important; }
     .hero-text, .hero-stats { min-width:0 !important; }
     .hero-h1 { font-size:40px !important; }
-    .g-hero { padding-left:24px !important; padding-right:24px !important; padding-top:28px !important; padding-bottom:44px !important; }
+    .g-hero { padding-left:24px !important; padding-right:24px !important; padding-top:0 !important; padding-bottom:0 !important; height:calc(100vh - 150px) !important; min-height:0 !important; overflow:hidden !important; }
+    .hero-text { display:flex !important; flex-direction:column !important; justify-content:center !important; min-height:0 !important; height:100% !important; }
+    .hero-text > div:first-child { margin-bottom:38px !important; }
+    .ig-badge { position:static !important; align-self:flex-start !important; margin-top:38px !important; left:auto !important; right:auto !important; bottom:auto !important; padding:11px 15px !important; border-radius:13px !important; }
+    .hero-text { display:flex !important; flex-direction:column !important; min-height:0 !important; height:100% !important; }
+    .hero-h1 { font-size:40px !important; }
     .hero-text p { max-width:100% !important; }
     .hero-img { width:92% !important; margin-left:auto !important; margin-right:auto !important; }
-    .ig-badge { padding:11px 15px !important; border-radius:13px !important; left:-10px !important; bottom:-16px !important; }
+    .ig-badge { padding:11px 15px !important; border-radius:13px !important; left:24px !important; right:auto !important; bottom:24px !important; }
     .ig-badge > div:first-child { font-size:13px !important; }
     .ig-badge > div:last-child { font-size:11px !important; }
     .tim-inner { padding-top:34px !important; }
@@ -92,10 +97,11 @@
 
   <!-- ============ HERO ============ -->
   <section id="pocetna" style="position:relative;background:#0A1A3F;color:#fff;overflow:hidden;">
-    <div style="position:absolute;inset:0;background:radial-gradient(1000px 600px at 85% -10%, rgba(30,127,203,0.35), transparent 60%);"></div>
-    <div class="g-hero" style="position:relative;max-width:1200px;margin:0 auto;padding:56px 32px 90px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:start;">
+    <image-slot id="hero-foto-t" src="images/hero-foto-t.webp" shape="rect" placeholder="Fotografija auto škole / vozila" style="position:absolute;inset:0;width:100%;height:100%;"></image-slot>
+    <div style="position:absolute;inset:0;background:linear-gradient(90deg, rgba(10,26,63,0.92) 0%, rgba(10,26,63,0.78) 42%, rgba(10,26,63,0.35) 100%);"></div>
+    <div class="g-hero" style="position:relative;max-width:1200px;margin:0 auto;padding:44px 32px 150px;display:grid;grid-template-columns:1fr;gap:56px;align-items:start;">
       <div class="hero-text">
-        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);color:#F7C325;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:26px;"><span class="lux-word w1">Brzo</span> · <span class="lux-word w2">Jednostavno</span> · <span class="lux-word w3">Pouzdano</span></div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(247,195,37,0.14);border:1px solid rgba(247,195,37,0.4);color:#F7C325;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:44px;"><span class="lux-word w1">Brzo</span> · <span class="lux-word w2">Jednostavno</span> · <span class="lux-word w3">Pouzdano</span></div>
         <h1 class="hero-h1" style="font-family:'Archivo';font-weight:900;font-size:60px;line-height:1.03;letter-spacing:-1px;margin-bottom:22px;">Sa nama ste<br>na <span style="color:#F7C325;">pravom putu</span></h1>
         <p style="font-size:19px;line-height:1.6;color:#C2D2EA;max-width:520px;margin-bottom:34px;">Auto škola LUX vas vodi od prvog časa teorije do dozvole u ruci — uz iskusne instruktore, moderna vozila i obuku prilagođenu vama.</p>
         <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;max-width:340px;">
@@ -103,16 +109,11 @@
           <a href="#cenovnik" style="border:1.5px solid rgba(255,255,255,0.35);color:#fff;font-family:'Archivo';font-weight:700;font-size:16px;padding:15px 30px;border-radius:999px;">Cenovnik</a>
         </div>
         <div class="hero-stats" style="display:flex;justify-content:space-between;max-width:400px;gap:36px;margin-top:46px;">
-          <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;" id="lux-godine">35+</div><div style="font-size:14px;color:#9FB6D6;">godina iskustva</div></div>
+          <div><div id="lux-godine" style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">35+</div><div style="font-size:14px;color:#9FB6D6;">godina iskustva</div></div>
           <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">5000+</div><div style="font-size:14px;color:#9FB6D6;">položenih vozača</div></div>
           <div><div style="font-family:'Archivo';font-weight:900;font-size:34px;color:#F7C325;">98%</div><div style="font-size:14px;color:#9FB6D6;">prolaznost</div></div>
         </div>
-      </div>
-      <div class="lux-mt0 hero-img" style="position:relative;margin-top:63px;">
-        <div class="lux-img-fix" style="position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 30px 70px rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.12); aspect-ratio: 7/6; width: 514px; height: 405px">
-          <image-slot id="hero-foto-t" src="images/hero-foto-t.webp" shape="rect" placeholder="Fotografija auto škole / vozila" style="width:100%;height:100%;"></image-slot>
-        </div>
-        <a href="https://www.instagram.com/autoskolalux/" target="_blank" rel="noopener" class="ig-badge" style="position:absolute;bottom:-22px;left:-22px;background:#1E7FCB;color:#fff;border-radius:16px;padding:18px 22px;box-shadow:0 16px 40px rgba(30,127,203,0.4);transition:transform .3s ease,box-shadow .3s ease;text-decoration:none;display:block;" style-hover="transform:translateY(-8px);box-shadow:0 24px 52px rgba(30,127,203,0.55);">
+        <a href="https://www.instagram.com/autoskolalux/" target="_blank" rel="noopener" class="ig-badge" style="position:absolute;bottom:28px;left:max(32px, calc(50% - 600px + 32px));z-index:2;background:#1E7FCB;color:#fff;border-radius:16px;padding:18px 22px;box-shadow:0 16px 40px rgba(30,127,203,0.4);transition:transform .3s ease,box-shadow .3s ease;text-decoration:none;display:block;" style-hover="transform:translateY(-8px);box-shadow:0 24px 52px rgba(30,127,203,0.55);">
           <div style="font-family:'Archivo';font-weight:800;font-size:15px;">@autoskolalux</div>
           <div style="font-size:13px;color:#CFE4FA;">Prati nas na Instagramu</div>
         </a>
@@ -202,35 +203,6 @@
   </section>
 
   <!-- ============ CENOVNIK ============ -->
-  <section id="cenovnik" style="background:#0C1E45;">
-    <div style="max-width:1200px;margin:0 auto;padding:60px 32px;">
-      <div style="text-align:center;margin-bottom:40px;">
-        
-        <h2 style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-0.5px;">Cenovnik</h2>
-      </div>
-      <div class="g-3" style="display:grid;grid-template-columns:repeat(2,minmax(0,400px));justify-content:center;gap:24px;">
-        <sc-for list="{{ cenovnik }}" as="c" hint-placeholder-count="2">
-          <div style="border-radius:18px;padding:34px 30px;background:{{ c.bg }};color:{{ c.fg }};border:1px solid rgba(255,255,255,0.12);position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;" style-hover="transform:translateY(-6px);border-color:#F7C325;box-shadow:0 16px 34px rgba(247,195,37,0.22);">
-            <sc-if value="{{ c.istaknuto }}" hint-placeholder-val="{{ true }}">
-              
-            </sc-if>
-            <div style="font-family:'Archivo';font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:{{ c.labela }};margin-bottom:14px;">{{ c.naziv }}</div>
-            <div style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-1px;margin-bottom:4px;">{{ c.cena }}</div>
-            <div style="font-size:14px;color:{{ c.labela }};margin-bottom:22px;">{{ c.jedinica }}</div>
-            <div style="display:flex;flex-direction:column;gap:11px;">
-              <sc-for list="{{ c.stavke }}" as="st" hint-placeholder-count="4">
-                <div style="display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;">
-                  <span style="color:#F7C325;font-weight:900;">✓</span><span>{{ st }}</span>
-                </div>
-              </sc-for>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-      <p style="text-align:center;font-size:14px;color:#AEC0DC;margin-top:28px;">Moguće plaćanje na rate. Za tačnu ponudu pozovite <a href="tel:0113119375" style="font-weight:700;">011 311 93 75</a>.</p>
-    </div>
-  </section>
-
   <!-- ============ VOZILA ============ -->
   <!-- ============ NAS TIM ============ -->
   <section id="tim" style="background:#0C1E45;">
@@ -254,6 +226,35 @@
       </div>
     </div>
   </section>
+
+  <section id="cenovnik" style="background:#0C1E45;">
+    <div class="g-cen" style="max-width:1200px;margin:0 auto;padding:60px 32px;display:grid;grid-template-columns:1fr minmax(0,440px);gap:56px;align-items:center;">
+      <div>
+        <h2 style="font-family:'Archivo';font-weight:900;font-size:44px;letter-spacing:-0.5px;margin-bottom:16px;">Cenovnik</h2>
+        <p style="font-size:14px;color:#AEC0DC;">Moguće plaćanje na rate. Za tačnu ponudu i cenu nezavisnih<br>individualnih časova pozovite <a href="tel:0113119375" style="font-weight: 700;">011 311 93 75</a>.</p>
+      </div>
+      <div class="g-3" style="display:grid;grid-template-columns:1fr;gap:24px;">
+        <sc-for list="{{ cenovnik }}" as="c" hint-placeholder-count="2">
+          <div style="border-radius:18px;padding:34px 30px;background:{{ c.bg }};color:{{ c.fg }};border:1px solid rgba(255,255,255,0.12);position:relative;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;" style-hover="transform:translateY(-6px);border-color:#F7C325;box-shadow:0 16px 34px rgba(247,195,37,0.22);">
+            <sc-if value="{{ c.istaknuto }}" hint-placeholder-val="{{ true }}">
+              
+            </sc-if>
+            <div style="font-family:'Archivo';font-weight:800;font-size:15px;letter-spacing:1px;text-transform:uppercase;color:{{ c.labela }};margin-bottom:14px;">{{ c.naziv }}</div>
+            <div style="font-family:'Archivo';font-weight:900;font-size:40px;letter-spacing:-1px;margin-bottom:4px;">{{ c.cena }}</div>
+            <div style="font-size:14px;color:{{ c.labela }};margin-bottom:22px;">{{ c.jedinica }}</div>
+            <div style="display:flex;flex-direction:column;gap:11px;">
+              <sc-for list="{{ c.stavke }}" as="st" hint-placeholder-count="4">
+                <div style="display:flex;gap:10px;align-items:flex-start;font-size:15px;line-height:1.4;">
+                  <span style="color:#F7C325;font-weight:900;">✓</span><span>{{ st }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ============ LOKACIJA ============ -->
   <section id="lokacija" style="max-width:1200px;margin:0 auto;padding:90px 32px;">
@@ -398,7 +399,6 @@ class Component extends DCLogic {
       ],
       cenovnik: [
         { naziv: "Kategorija B", cena: "od 85.000 rsd", jedinica: "Putnički automobil", bg: "#1E7FCB", fg: "#fff", labela: "#CFE4FA", istaknuto: true, stavke: ["Kompletna teorijska obuka", "40 časova vožnje", "Časovi po dogovoru", "Plaćanje na rate", "Podrška do ispita"] },
-        { naziv: "PSP", cena: "od 15.000 rsd", jedinica: "Moped i lakša vozila", bg: "#132A54", fg: "#E6EDF7", labela: "#AEC0DC", istaknuto: false, stavke: ["Poznavanje saobraćajnih propisa", "Priprema za test", "Fleksibilni termini", "Podrška do ispita"] },
       ],
       vozila: [
         { id: "t-vozilo-1", placeholder: "Automobil za obuku (kat. B)", naslov: "Automobil — kategorija B", opis: "Komforan i bezbedan, idealan za prve časove." },
